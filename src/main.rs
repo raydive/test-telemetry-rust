@@ -1,4 +1,9 @@
-use opentelemetry::{global, sdk::export::trace::stdout, trace::{Tracer, TraceContextExt}, KeyValue, Key, Value};
+use opentelemetry::{
+    global,
+    sdk::export::trace::stdout,
+    trace::{TraceContextExt, Tracer},
+    Key, KeyValue, Value,
+};
 
 fn main() {
     // Create a new trace pipeline that prints to stdout
@@ -7,7 +12,10 @@ fn main() {
     tracer.in_span("doing_work", |cx| {
         // Traced app logic here...
         let span = cx.span();
-        span.set_attribute(KeyValue { key: Key::new("mister"), value: Value::I64(1)});
+        span.set_attribute(KeyValue {
+            key: Key::new("mister"),
+            value: Value::I64(1),
+        });
         span.add_event("test telemetry", vec![KeyValue::new("trace1", 1)]);
     });
 
